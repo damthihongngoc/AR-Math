@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR Computer</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <audio
+      id="sound-bg"
+      src="../public/audios/home-soundtrack.mp3"
+      preload="auto"
+      loop
+    ></audio>
+
+    <div id="overlay">
+      <div class="overlay-top">
+        <img
+          id="math_formula_01"
+          class="formula"
+          src="../public/images/math_formula_01.png"
+        />
+        <img
+          id="op_infinite"
+          class="operator"
+          src="../public/images/op_infinite.png"
+        />
+        <img
+          id="math_formula_02"
+          class="formula"
+          src="../public/images/math_formula_02.png"
+        />
+        <img
+          id="op_equal"
+          class="operator"
+          src="../public/images/op_equal.png"
+        />
+        <img
+          id="math_formula_03"
+          class="formula"
+          src="../public/images/math_formula_03.png"
+        />
+      </div>
+
+      <div class="overlay-right">
+        <img
+          id="op_multiply"
+          class="operator"
+          src="../public/images/op_multiply.png"
+        />
+        <img
+          id="math_formula_04"
+          class="formula"
+          src="../public/images/math_formula_04.png"
+        />
+        <div>
+          <img
+            id="math_formula_05"
+            class="formula"
+            src="../public/images/math_formula_05.png"
+          />
+          <img
+            id="op_question_mark"
+            class="operator"
+            src="../public/images/op_question_mark.png"
+          />
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px">
+          <img
+            id="math_formula_06"
+            class="formula"
+            src="../public/images/math_formula_06.png"
+          />
+          <img
+            id="op_lower_than"
+            class="operator"
+            src="../public/images/op_lower_than.png"
+          />
+        </div>
+      </div>
+
+      <div class="overlay-bottom">
+        <img
+          id="math_formula_07"
+          class="formula"
+          src="../public/images/math_formula_07.png"
+        />
+        <img id="op_mod" class="operator" src="../public/images/op_mod.png" />
+      </div>
+
+      <div class="overlay-left">
+        <img
+          id="op_divide"
+          class="operator"
+          src="../public/images/op_divide.png"
+        />
+        <img
+          id="math_formula_11"
+          class="formula"
+          src="../public/images/math_formula_11.png"
+        />
+        <img id="op_plus" class="operator" src="../public/images/op_plus.png" />
+        <div>
+          <img
+            id="math_formula_10"
+            class="formula"
+            src="../public/images/math_formula_10.png"
+          />
+          <img
+            id="math_formula_09"
+            class="formula"
+            src="../public/images/math_formula_09.png"
+          />
+        </div>
+        <div>
+          <img
+            id="std_tool_kit"
+            class="operator"
+            src="../public/images/std_tool_kit.png"
+          />
+          <img
+            id="math_formula_08"
+            class="formula"
+            src="../public/images/math_formula_08.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div id="main">
+      <div id="title">
+        <img src="../public/images/math_title.png" />
+        <h1>AR COMPUTER</h1>
+      </div>
+      <div id="menu">
+        <button id="btnPractice">LUYỆN TẬP</button>
+        <button id="btnQuiz">KIỂM TRA</button>
+        <button id="btnGuide">HƯỚNG DẪN</button>
+        <button id="btnAbout">GIỚI THIỆU</button>
+      </div>
+    </div>
+
+    <div id="modalGuide" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" data-close="modalGuide">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+
+        <!-- Slide wrapper -->
+        <div class="slides">
+          <!-- Slide 1 -->
+          <div class="slide active">
+            <h2>CHUẨN BỊ THẺ</h2>
+            <ul>
+              <li>
+                In các thẻ số từ 0-9 và các phép toán (+, -, ×, ÷) lên giấy
+                trắng.
+              </li>
+              <li>
+                Hãy cắt chúng một cách gọn gàng và giữ cho các thẻ luôn sạch sẽ!
+              </li>
+            </ul>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <h2>CHO PHÉP TRUY CẬP</h2>
+            <ul>
+              <li>
+                Khi vào ứng dụng, máy tính của bạn sẽ yêu cầu quyền truy cập
+                camera.
+              </li>
+              <li>
+                Nhấn "Cho phép" để bắt đầu cuộc phiêu lưu toán học của bạn!
+              </li>
+            </ul>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <h2>SẮP XẾP CÁC THẺ</h2>
+            <ul>
+              <li>Đặt các thẻ theo thứ tự: SỐ - PHÉP TOÁN - SỐ</li>
+              <li>Ví dụ: 2 + 3 hoặc 5 × 4</li>
+            </ul>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="slide">
+            <h2>XEM KẾT QUẢ</h2>
+            <ul>
+              <li>
+                Kết quả sẽ xuất hiện dưới dạng 3D ngay trên màn hình của bạn!
+              </li>
+              <li>Di chuyển các thẻ để thử các phép tính khác nhau!</li>
+            </ul>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="slide">
+            <h2>MỘT SỐ LƯU Ý</h2>
+            <ul>
+              <li>
+                Đảm bảo có đủ ánh sáng để camera nhận diện các thẻ tốt hơn.
+              </li>
+              <li>
+                Giữ các thẻ ổn định và cách đều nhau để có kết quả ổn định hơn.
+              </li>
+              <li>Không để các thẻ bị mờ hoặc che khuất.</li>
+              <li>Thử nghiệm với các phép tính khác nhau để khám phá thêm!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Điều khiển -->
+        <div class="slide-controls">
+          <button class="slide-button prevSlide">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+          </button>
+          <button class="slide-button nextSlide">
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalAbout" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" data-close="modalAbout">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+
+        <!-- Slide wrapper -->
+        <div class="slides">
+          <!-- Slide 1 -->
+          <div class="slide active">
+            <h2>MỤC TIÊU</h2>
+            <ul>
+              <li>
+                AR Computer là một ứng dụng thực tế ảo tăng cường (AR) nhằm giúp
+                trẻ em học và thực hành các khái niệm toán học cơ bản một cách
+                thú vị và tương tác.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <h2>CÔNG NGHỆ</h2>
+            <ul>
+              <li>A-Frame</li>
+              <li>MindAR.js</li>
+              <li>Three.js</li>
+              <li>WebGL</li>
+            </ul>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <h2>TÍNH NĂNG</h2>
+            <ul>
+              <li>Môi trường 3D tương tác để học các khái niệm toán học.</li>
+              <li>
+                Phản hồi và trực quan hóa các bài toán theo thời gian thực.
+              </li>
+              <li>Hỗ trợ các phép toán và hàm số khác nhau.</li>
+              <li>Giao diện thân thiện với trẻ em.</li>
+            </ul>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="slide">
+            <h2>TƯƠNG LAI</h2>
+            <ul>
+              <li>Chế độ trò chơi.</li>
+              <li>Các phép tính phức tạp hơn.</li>
+              <li>Hỗ trợ nhiều thẻ hơn.</li>
+              <li>Hệ thống xếp hạng</li>
+            </ul>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="slide">
+            <h2>LIÊN HỆ</h2>
+            <ul>
+              <li>Email: support@arcomputer.com</li>
+              <li>Phone: +1 (555) 123-4567</li>
+              <li>Website: www.arcomputer.com</li>
+              <li>Theo dõi chúng tôi trên mạng xã hội để cập nhật!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Điều khiển -->
+        <div class="slide-controls">
+          <button class="slide-button prevSlide">
+            <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+          </button>
+          <button class="slide-button nextSlide">
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const bg = document.getElementById("sound-bg");
+      bg.volume = 0.2;
+
+      function tryPlayAudio() {
+        bg.play()
+          .then(() => {
+            document.removeEventListener("click", tryPlayAudio);
+            document.removeEventListener("touchstart", tryPlayAudio);
+          })
+          .catch(() => {});
+      }
+
+      document.addEventListener("click", tryPlayAudio);
+      document.addEventListener("touchstart", tryPlayAudio);
+    </script>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>

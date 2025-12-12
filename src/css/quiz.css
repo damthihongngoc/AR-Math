@@ -1,0 +1,414 @@
+@font-face {
+  font-family: "Alfa Slab One";
+  src: url("../../public/fonts/AlfaSlabOne-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: sans-serif;
+  font-weight: normal;
+  overflow: hidden;
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.loading-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #1161a9;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 1.5px,
+      transparent 1.5px
+    );
+  background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+  background-position: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+  clip-path: inset(0);
+  transition: clip-path 1s ease-in-out;
+}
+
+.loading-screen.revealed::before {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    0% 100%,
+    0% 0%,
+    20px 20px,
+    20px calc(100% - 20px),
+    calc(100% - 20px) calc(100% - 20px),
+    calc(100% - 20px) 20px,
+    20px 20px
+  );
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease 1s;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: white;
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+/* Overlay buttons */
+.overlay-buttons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.overlay-buttons button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 36px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.overlay-buttons button:hover {
+  transform: scale(1.1);
+}
+
+/* Quiz Container */
+.quiz-container {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.score-board {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0b5599;
+}
+
+.score-label {
+  margin-right: 10px;
+}
+
+#scoreValue {
+  color: #ff6b00;
+  font-size: 28px;
+}
+
+.question-counter {
+  font-size: 20px;
+  color: #555;
+}
+
+#currentQuestion {
+  color: #0b5599;
+  font-weight: bold;
+}
+
+/* Question Card */
+.question-card {
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+
+  background-color: #1161a9; /* xanh blueprint */
+
+  background-image:
+        /* lưới nhỏ */ linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    /* lưới lớn */
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.1) 1.5px,
+        transparent 1.5px
+      ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 1.5px,
+      transparent 1.5px
+    );
+
+  background-size: 20px 20px, /* caro nhỏ */ 20px 20px, 100px 100px,
+    /* caro lớn */ 100px 100px;
+
+  /* tránh line sát mép */
+  background-position: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+}
+
+.question-text {
+  font-family: "Alfa Slab One", sans-serif;
+  font-weight: normal;
+  font-size: 36px;
+  color: white;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.answer-prompt {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+}
+
+/* Timer Bar */
+.timer-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff88, #00cc66);
+  border-radius: 5px;
+  transition: width 0.1s linear;
+  width: 100%;
+}
+
+.timer-fill.warning {
+  background: linear-gradient(90deg, #ffaa00, #ff6600);
+}
+
+.timer-fill.danger {
+  background: linear-gradient(90deg, #ff4444, #cc0000);
+}
+
+/* Feedback */
+.feedback {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  padding: 30px 50px;
+  border-radius: 20px;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  z-index: 200;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.feedback.show {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.feedback.correct {
+  background: linear-gradient(135deg, #00d084, #00a86b);
+  box-shadow: 0 0 40px rgba(0, 208, 132, 0.6);
+}
+
+.feedback.incorrect {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  box-shadow: 0 0 40px rgba(255, 68, 68, 0.6);
+}
+
+/* Result Screen */
+.result-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  transition: opacity 0.5s ease;
+}
+
+.result-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.result-card {
+  background: white;
+  padding: 50px;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.result-title {
+  font-family: "Alfa Slab One", sans-serif;
+  font-weight: normal;
+  font-size: 48px;
+  color: #0b5599;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.final-score {
+  margin: 30px 0;
+}
+
+.score-circle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #1161a9;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1) 1.5px,
+      transparent 1.5px
+    );
+  background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+  background-position: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+  clip-path: inset(0);
+  transition: clip-path 1s ease-in-out;
+}
+
+#finalScore {
+  font-size: 72px;
+  font-weight: bold;
+  color: white;
+  line-height: 1;
+}
+
+.score-total {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.result-message {
+  font-size: 24px;
+  color: #555;
+  margin: 30px 0;
+  line-height: 1.5;
+}
+
+.result-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.result-buttons button {
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-restart {
+  background-color: #c2dcff;
+  color: #00357a;
+}
+
+.btn-home {
+  background: #0b5599;
+  color: white;
+}
+
+.result-buttons button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
