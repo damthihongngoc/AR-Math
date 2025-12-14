@@ -1,0 +1,19 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "react-jsx"
+  }
+}
