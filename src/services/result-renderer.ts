@@ -30,7 +30,8 @@ export class ResultRenderer {
   displayMultiDigitNumber(multiDigit: MultiDigitNumber): void {
     if (this.currentDisplayedMultiDigit === multiDigit.value) return
 
-    const { value } = multiDigit
+    const { value, isEven } = multiDigit
+    const message = `${value} là ${isEven ? 'số chẵn' : 'số lẻ'}`
 
     // AppToast.success(message)
 
