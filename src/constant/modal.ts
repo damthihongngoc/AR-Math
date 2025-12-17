@@ -33,7 +33,7 @@ export const GUIDE_CONTENT = [
 export const ABOUT_CONTENT = [
   {
     title: 'MỤC TIÊU',
-    items: ['AR MATH giúp người dùng học toán qua AR.'],
+    items: ['AR Math giúp người dùng học toán qua AR.'],
   },
   {
     title: 'CÔNG NGHỆ',
@@ -49,6 +49,6 @@ export const ABOUT_CONTENT = [
   },
   {
     title: 'LIÊN HỆ',
-    items: ['Email: support@arcomputer.com'],
+    items: ['Email: support@armath.com'],
   },
 ]

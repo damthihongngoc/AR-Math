@@ -47,6 +47,7 @@ const Home = () => {
 
       <div className="flex flex-col gap-[3vh] mt-[3vh] justify-center items-center">
         <Button onClick={() => navigate('/practice')}>LUYỆN TẬP</Button>
+        <Button onClick={() => navigate('/quiz')}>KIỂM TRA</Button>
         <Button onClick={() => openModal('guide')}>HƯỚNG DẪN</Button>
         <Button onClick={() => openModal('about')}>GIỚI THIỆU</Button>
       </div>

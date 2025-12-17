@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 
 interface UseARSystemReturn {
@@ -9,55 +9,67 @@ interface UseARSystemReturn {
 
 const useARSystem = (sceneRef: RefObject<any>): UseARSystemReturn => {
   const arSystemRef = useRef<any>(null)
+  const startedRef = useRef(false)
+
   const [isLoading, setIsLoading] = useState(true)
   const [loadingError, setLoadingError] = useState<string | null>(null)
 
   useEffect(() => {
     const sceneEl = sceneRef.current
-
     if (!sceneEl) {
       setLoadingError('Scene element not found')
       setIsLoading(false)
       return
     }
 
-    let started = false
+    const handleRenderStart = () => {
+      const arSystem = sceneEl.systems['mindar-image-system']
+      if (!arSystem || startedRef.current) return
 
-    const handleRenderStart = async (): Promise<void> => {
-      try {
-        setIsLoading(true)
-        setLoadingError(null)
+      startedRef.current = true
+      arSystemRef.current = arSystem
 
-        const arSystem = sceneEl.systems['mindar-image-system']
+      arSystem.start()
+      console.log('[MindAR] start called')
+    }
 
-        if (!arSystem) {
-          throw new Error('AR System not found')
-        }
+    const handleARReady = () => {
+      console.log('[MindAR] arReady')
+      setIsLoading(false)
+    }
 
-        await arSystem.start()
-        arSystemRef.current = arSystem
-        started = true
-
-        console.log('AR System started')
-        setIsLoading(false)
-      } catch (error) {
-        console.error('AR System start error:', error)
-        setLoadingError(
-          error instanceof Error ? error.message : 'Failed to start AR system'
-        )
-        setIsLoading(false)
-      }
+    const handleARError = (event: any) => {
+      console.error('[MindAR] arError', event)
+      setLoadingError(
+        'Khởi động AR thất bại (Lỗi thiết bị hoặc trình duyệt không được hỗ trợ)'
+      )
+      setIsLoading(false)
     }
 
     sceneEl.addEventListener('renderstart', handleRenderStart)
+    sceneEl.addEventListener('arReady', handleARReady)
+    sceneEl.addEventListener('arError', handleARError)
 
     return () => {
       sceneEl.removeEventListener('renderstart', handleRenderStart)
+      sceneEl.removeEventListener('arReady', handleARReady)
+      sceneEl.removeEventListener('arError', handleARError)
 
-      if (started && arSystemRef.current) {
-        arSystemRef.current.stop()
-        console.log('AR System stopped')
+      if (!startedRef.current) return
+
+      const system = arSystemRef.current
+
+      if (system && system.video) {
+        try {
+          system?.stop()
+          console.log('[MindAR] stopped safely')
+        } catch (err) {
+          console.warn('[MindAR] stop skipped', err)
+        }
       }
+
+      startedRef.current = false
+      arSystemRef.current = null
     }
   }, [sceneRef])
 

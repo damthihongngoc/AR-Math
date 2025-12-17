@@ -8,24 +8,6 @@ import useARSystem from 'src/hooks/useARSystem'
 type MindARViewerProps = {
   sceneRef: React.RefObject<any>
 }
-;(window as any).AFRAME.registerComponent('set-render-order', {
-  schema: { order: { default: 0 } },
-
-  init: function () {
-    this.el.addEventListener('model-loaded', () => {
-      const mesh = this.el.getObject3D('mesh')
-      if (mesh) {
-        mesh.traverse((node: any) => {
-          if (node.isMesh) {
-            node.renderOrder = this.data.order
-            node.material.depthTest = true
-            node.material.depthWrite = true
-          }
-        })
-      }
-    })
-  },
-})
 
 const MindARViewer = ({ sceneRef }: MindARViewerProps) => {
   const navigate = useNavigate()

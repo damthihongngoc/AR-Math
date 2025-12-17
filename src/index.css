@@ -49,3 +49,7 @@ body,
 #root {
   height: 100%;
 }
+
+iframe {
+  display: none;
+}

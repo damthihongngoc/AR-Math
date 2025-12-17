@@ -5,6 +5,7 @@ import { PositionTracker } from 'src/services/position-tracker'
 import { ResultRenderer } from 'src/services/result-renderer'
 import { TargetManager } from 'src/services/target-manager'
 import { TextToSpeechService } from 'src/services/text-to-speech'
+import AudioManager from 'src/services/audio-manager'
 import type { Expression, Target } from 'src/types'
 
 interface usePracticeModeReturn {
@@ -16,6 +17,7 @@ interface usePracticeModeReturn {
 }
 
 const usePracticeMode = (): usePracticeModeReturn => {
+  const audioManager = useRef<AudioManager>(AudioManager.getInstance())
   const targetManager = useRef<TargetManager | null>(null)
   const resultRenderer = useRef<ResultRenderer | null>(null)
   const tts = useRef<TextToSpeechService | null>(null)
@@ -25,6 +27,23 @@ const usePracticeMode = (): usePracticeModeReturn => {
   const [hasNegativeResult, setHasNegativeResult] = useState(false)
 
   useEffect(() => {
+    // Create audios using AudioManager
+    audioManager.current.createAudio('practice-bg', {
+      src: '/audios/background/practice.mp3',
+      loop: true,
+      volume: 0.1,
+      type: 'background',
+    })
+
+    audioManager.current.createAudio('wrong-sound', {
+      src: '/audios/bgm/wrong.mp3',
+      volume: 0.5,
+      type: 'effect',
+    })
+
+    // Play background music
+    audioManager.current.play('practice-bg')
+
     // Initialize services
     targetManager.current = new TargetManager(TARGET_TYPES)
     resultRenderer.current = new ResultRenderer(RESULT_MODELS)
@@ -53,6 +72,8 @@ const usePracticeMode = (): usePracticeModeReturn => {
         const result = expressionAnalyzer.current?.getResult()
         if (result !== null && result !== undefined && result < 0) {
           setHasNegativeResult(true)
+          audioManager.current.play('wrong-sound')
+          audioManager.current.pause('practice-bg')
         }
       })
 
@@ -90,6 +111,8 @@ const usePracticeMode = (): usePracticeModeReturn => {
         const result = expressionAnalyzer.current?.getResult()
         if (result !== null && result !== undefined && result < 0) {
           setHasNegativeResult(true)
+          audioManager.current.play('wrong-sound')
+          audioManager.current.pause('practice-bg')
         }
       })
     }
@@ -103,6 +126,12 @@ const usePracticeMode = (): usePracticeModeReturn => {
     }
 
     return () => {
+      // Cleanup audios
+      audioManager.current.stop('practice-bg')
+      audioManager.current.stop('wrong-sound')
+      audioManager.current.removeAudio('practice-bg')
+      audioManager.current.removeAudio('wrong-sound')
+
       for (let i = 0; i <= 13; i++) {
         const anchor = document.getElementById(`anchor${i}`)
         if (!anchor) continue
@@ -118,6 +147,7 @@ const usePracticeMode = (): usePracticeModeReturn => {
   const resetNegativeResult = () => {
     setHasNegativeResult(false)
     // Resume background music
+    audioManager.current.play('practice-bg')
   }
 
   return {

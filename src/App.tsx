@@ -4,6 +4,7 @@ import AppLayout from 'src/components/AppLayout'
 import AppLoading from 'src/components/AppLoading'
 import Home from 'src/pages/Home'
 import Practice from 'src/pages/Practice'
+import Quiz from 'src/pages/Quiz'
 
 function App() {
   return (
@@ -22,6 +23,14 @@ function App() {
           element={
             <Suspense fallback={<AppLoading />}>
               <Practice />
+            </Suspense>
+          }
+        />
+        <Route
+          path="quiz/*"
+          element={
+            <Suspense fallback={<AppLoading />}>
+              <Quiz />
             </Suspense>
           }
         />

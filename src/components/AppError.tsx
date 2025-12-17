@@ -44,7 +44,7 @@ const AppError: React.FC<AppErrorProps> = ({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm">
       <div
-        className={`max-w-md mx-4 rounded-xl border-2 p-6 text-white ${styles.border} ${styles.bg}`}
+        className={`max-w-md mx-4 rounded-xl border-2 p-6 text-white ${styles.border} ${styles.bg} z-[9999]`}
       >
         <h3 className="text-xl font-bold mb-2">{title}</h3>
 
